@@ -18,17 +18,18 @@ class Main extends PluginBase {
         $seconds = $this->getConfig()->getNested("restart_interval.seconds", 0);
         $minutes = $this->getConfig()->getNested("restart_interval.minutes", 0);
         $hours = $this->getConfig()->getNested("restart_interval.hours", 1);
+        $days = $this->getConfig()->getNested("restart_interval.days", 0);
 
-        $this->restartInterval = ($seconds + $minutes * 60 + $hours * 3600);
+        $this->restartInterval = ($seconds + $minutes * 60 + $hours * 3600 + $days * 86400);
 
         if ($this->restartInterval > 0) {
             $this->getScheduler()->scheduleDelayedTask(new ClosureTask(function (): void {
                 $this->scheduleRestart();
             }), 20);
 
-            $this->getLogger()->info(TextFormat::GREEN . "AutoRestart enabled with a restart interval of {$this->restartInterval} seconds.");
+            $this->getLogger()->info(TextFormat::GREEN . "AutoRestart plugin enabled with a restart interval of {$this->restartInterval} seconds.");
         } else {
-            $this->getLogger()->info(TextFormat::GREEN . "AutoRestart enabled with no scheduled restart interval.");
+            $this->getLogger()->info(TextFormat::GREEN . "AutoRestart plugin enabled with no scheduled restart interval.");
         }
     }
 
@@ -40,6 +41,6 @@ class Main extends PluginBase {
     }
 
     public function onDisable(): void {
-        $this->getLogger()->info(TextFormat::RED . "AutoRestart disabled.");
+        $this->getLogger()->info(TextFormat::RED . "AutoRestart plugin disabled.");
     }
 }
