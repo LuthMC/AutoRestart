@@ -1,0 +1,6 @@
+name: AutoRestart
+main: Luthfi\AutoRestart\Main
+version: 1.0.0
+author: Luthfi
+api: 5.0.0
+description: AutoRestart Servers.
